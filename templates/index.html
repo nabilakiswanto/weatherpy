@@ -11,11 +11,9 @@
 	<link href='//fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 
 	<meta charset="UTF-8">
-<<<<<<< HEAD
-	<title>Weather App</title>
-=======
+
 	<title>Weather App Using Flask</title>
->>>>>>> 9dee4214ab1cf3a130132fd27aac7eb777abc109
+
 	
 	<link rel="shortcut icon" href="../static/img/favicon.ico">
 	<link rel="stylesheet" href="../static/css/bootstrap.css">
@@ -120,8 +118,23 @@
 								<div class="container small-company">
 									<div class="row">
 										<div class="col-xs-12 text-center">
+											{% block content %}	
+											<form class="under-construction form-styler" action="{{ url_for("index")}}" method="post">
+												<div class="form-group">
+													<label for="cityName">Nama Kota:</label>
+													<input type="text" name="cityName" placeholder="Nama Kota" value="{{cityName}}">
+												</div>
 
-											<h3>Nama Kota</h3>
+												<div class="btn join-us form-group form-sender">
+													<input type="submit" class="" value="Send">
+												</div>
+												{% if error is defined and error %}
+													<br><br><span class="alert alert-danger">Error: Tolong input nama kota dengan benar.</span></br>
+												{% endif %}
+											</form>
+											{% endblock %}
+											{% if data is defined and data %}
+											<h3>Country Code : {{ data.sys.country }}</h3>
 
 											<hr>
 
@@ -176,8 +189,9 @@
 												</div><!-- /col -->
 											</div>
 											</div>
+											{% endif %}
 
-											<div class="text-center"></div><a href="#" class="glich-button" data-hover="Hire us"><span>Hire us</span></a>
+											
 
 										</div><!-- col-xs-12 -->
 									</div><!-- row -->

@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 
 @app.route("/", methods=["GET","POST"])
-def main():
+def index():
     weatherData = ''
     error = 0
     cityName = ''
@@ -12,7 +12,7 @@ def main():
         cityName = request.form.get("cityName")
         if cityName:
             weatherApiKey = 'bafa0c89b1cda79638c2bab4713670ce'
-            url = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid="+ weatherApiKey
+            url = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid="+weatherApiKey
             weatherData=requests.get(url).json
         else:
             error = 1
