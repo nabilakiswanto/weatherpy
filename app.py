@@ -1,12 +1,26 @@
 
 from flask import Flask, request, render_template, abort, Response
-import requests
+
 import json
 import urllib
+import math
 
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
+def round_decimals_up(number:float, decimals:int=2):
+    """
+    Returns a value rounded up to a specific number of decimal places.
+    """
+    if not isinstance(decimals, int):
+        raise TypeError("decimal places must be an integer")
+    elif decimals < 0:
+        raise ValueError("decimal places has to be 0 or more")
+    elif decimals == 0:
+        return math.ceil(number)
+
+    factor = 10 ** decimals
+    return math.ceil(number * factor) / factor
 def index():
     city = request.args.get('city')
     
@@ -25,7 +39,7 @@ def index():
 
     resp = Response(data)
     resp.status_code = 200
-    return render_template('index.html', title='Weather App - Flask', data=json.loads(data.read().decode('utf8')))
+    return render_template('index.html', title='Weather App - Flask', round=round_decimals_up, data=json.loads(data.read().decode('utf8')))
 
 if __name__ == "__main__":
     app.run()
